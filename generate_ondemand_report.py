@@ -158,7 +158,7 @@ def classify_country(country_name: str) -> dict:
     print(f"  Using model: claude-sonnet-4-20250514 with web search...")
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-6",
         max_tokens=4000,
         system=SYSTEM_PROMPT,
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
