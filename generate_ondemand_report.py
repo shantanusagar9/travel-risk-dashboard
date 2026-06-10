@@ -109,11 +109,11 @@ The JSON must follow this exact structure:
   ],
 
   "emergency_numbers": {
-    "police": "<number>",
-    "ambulance": "<number>",
-    "fire": "<number>",
-    "tourist_helpline": "<number or N/A>",
-    "emergency": "<single emergency number if exists, e.g. 112>"
+    "police": "<number only, max 10 chars, e.g. 091 or 999>",
+    "ambulance": "<number only, max 10 chars>",
+    "fire": "<number only, max 10 chars>",
+    "tourist_helpline": "<number only, max 10 chars, or N/A>",
+    "emergency": "<single emergency number only, e.g. 112>"
   },
 
   "useful_apps": [

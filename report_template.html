@@ -134,9 +134,10 @@ body{
 .card ul li{font-size:8pt;color:#444;margin-bottom:3px;line-height:1.45;}
 
 /* ── OVERVIEW STATS ── */
-.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 8px;margin-bottom:8px;}
-.stat-item .s-label{font-size:6.5pt;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;}
-.stat-item .s-val{font-size:8.5pt;font-weight:700;color:var(--navy);line-height:1.3;}
+.stat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px 10px;margin-bottom:10px;}
+.stat-item{min-width:0;}
+.stat-item .s-label{font-size:6.5pt;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;white-space:nowrap;}
+.stat-item .s-val{font-size:8.5pt;font-weight:700;color:var(--navy);line-height:1.3;word-break:break-word;}
 
 /* ── VISA BOX ── */
 .visa-box{
@@ -194,13 +195,24 @@ body{
 .event-desc{font-size:8pt;color:#555;line-height:1.5;}
 
 /* ── HELPLINES ── */
-.helpline-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;}
-.h-item{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:6px;padding:7px 10px;text-align:center;
+.helpline-bar{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;margin-bottom:13px;
+  border:1.5px solid var(--border);border-radius:8px;
+  overflow:hidden;background:#fff;
+  box-shadow:var(--shadow);
 }
-.h-label{font-size:6.5pt;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;}
-.h-number{font-size:10.5pt;font-weight:800;color:var(--navy);}
+.h-item{
+  padding:7px 10px;text-align:center;
+  border-right:1px solid var(--border);
+  background:#fff;
+}
+.h-item:last-child{border-right:none;}
+.h-item:first-child{background:var(--navy);}
+.h-item:first-child .h-label{color:rgba(255,255,255,0.7);}
+.h-item:first-child .h-number{color:#fff;font-size:9pt;}
+.h-label{font-size:5.5pt;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;}
+.h-number{font-size:8.5pt;font-weight:800;color:var(--navy);line-height:1.3;word-break:break-word;}
 
 /* ── RECOMMENDATIONS ── */
 .rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
@@ -258,9 +270,18 @@ body{
   <div class="banner-pill">{{ data.overall_risk }} Risk</div>
 </div>
 
-<!-- ROW 1: Overview + Features + Risks -->
-<div class="grid-3 section">
+<!-- HELPLINE BAR -->
+{% set n = data.emergency_numbers %}
+<div class="helpline-bar">
+  {% if n.emergency %}<div class="h-item"><div class="h-label">Emergency</div><div class="h-number">{{ n.emergency }}</div></div>{% endif %}
+  {% if n.police %}<div class="h-item"><div class="h-label">Police</div><div class="h-number">{{ n.police }}</div></div>{% endif %}
+  {% if n.ambulance %}<div class="h-item"><div class="h-label">Ambulance</div><div class="h-number">{{ n.ambulance }}</div></div>{% endif %}
+  {% if n.fire %}<div class="h-item"><div class="h-label">Fire</div><div class="h-number">{{ n.fire }}</div></div>{% endif %}
+  {% if n.tourist_helpline and n.tourist_helpline != 'N/A' %}<div class="h-item"><div class="h-label">Tourist</div><div class="h-number">{{ n.tourist_helpline }}</div></div>{% endif %}
+</div>
 
+<!-- ROW 1: Country Overview — full width -->
+<div class="section">
   <div class="card">
     <div class="card-head"><span class="ico">🌍</span> Country Overview</div>
     <div class="stat-grid">
@@ -273,6 +294,10 @@ body{
     </div>
     <p>{{ data.overview.brief }}</p>
   </div>
+</div>
+
+<!-- ROW 2: Key Features + Key Risks — 2 columns -->
+<div class="grid-2 section">
 
   <div class="card">
     <div class="card-head"><span class="ico">📌</span> Key Features</div>
@@ -379,19 +404,6 @@ body{
       </div>
       {% endfor %}
     </div>
-  </div>
-</div>
-
-<!-- HELPLINES -->
-<div class="section">
-  <div class="sec-label">Emergency Helplines</div>
-  <div class="helpline-grid">
-    {% set n = data.emergency_numbers %}
-    {% if n.emergency %}<div class="h-item"><div class="h-label">Emergency</div><div class="h-number">{{ n.emergency }}</div></div>{% endif %}
-    {% if n.police %}<div class="h-item"><div class="h-label">Police</div><div class="h-number">{{ n.police }}</div></div>{% endif %}
-    {% if n.ambulance %}<div class="h-item"><div class="h-label">Ambulance</div><div class="h-number">{{ n.ambulance }}</div></div>{% endif %}
-    {% if n.fire %}<div class="h-item"><div class="h-label">Fire</div><div class="h-number">{{ n.fire }}</div></div>{% endif %}
-    {% if n.tourist_helpline and n.tourist_helpline != 'N/A' %}<div class="h-item"><div class="h-label">Tourist</div><div class="h-number">{{ n.tourist_helpline }}</div></div>{% endif %}
   </div>
 </div>
 
