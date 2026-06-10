@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Travel Advisory — {{ data.country }} | Across Assist</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0f1f3d;
+  --l1:#1a7a3f; --l1-bg:#e8f5ee; --l1-border:#a8d5b8;
+  --l2:#c47900; --l2-bg:#fef9ec; --l2-border:#f0cc7a;
+  --l3:#c44a00; --l3-bg:#fef0ea; --l3-border:#f0a07a;
+  --l4:#a01010; --l4-bg:#fdeaea; --l4-border:#e08888;
+  --muted:#6b7a99;
+  --border:#dde3ef;
+  --surface:#f4f6fb;
+  --shadow:0 1px 5px rgba(15,31,61,0.08);
+  --shadow-md:0 4px 14px rgba(15,31,61,0.1);
+}
+body{font-family:'Inter',Arial,sans-serif;background:var(--surface);color:var(--navy);font-size:14px;line-height:1.6;}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy);color:#fff;padding:10px 0;}
+.topbar-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar .brand{font-size:16px;font-weight:800;letter-spacing:-0.5px;}
+.topbar .meta{font-size:12px;color:#aabbcc;}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:sticky;top:0;z-index:100;
+  background:#fff;border-bottom:2px solid var(--border);
+  box-shadow:var(--shadow-md);
+}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:0 24px;
+  display:flex;gap:0;overflow-x:auto;
+}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-link{
+  padding:13px 16px;
+  font-size:12px;font-weight:600;color:var(--muted);
+  text-decoration:none;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;transition:all 0.2s;
+}
+.nav-link:hover{color:var(--navy);border-bottom-color:var(--navy);}
+.nav-link.active{color:var(--navy);border-bottom-color:var(--navy);}
+
+/* ── MAIN ── */
+.main{max-width:960px;margin:0 auto;padding:28px 24px 48px;}
+
+/* ── HERO ── */
+.hero{
+  background:#fff;border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-md);
+  padding:28px 32px;margin-bottom:24px;
+}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.hero-country{font-size:36px;font-weight:900;letter-spacing:-1.5px;line-height:1;}
+.hero-city{font-size:14px;color:var(--muted);margin-top:5px;font-weight:500;}
+.hero-date{text-align:right;font-size:12px;color:var(--muted);}
+.hero-date .date-val{font-size:15px;font-weight:700;color:var(--navy);display:block;}
+
+.banner{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;border-radius:8px;border:1.5px solid;
+}
+.b-circle{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;color:#fff;flex-shrink:0;
+  box-shadow:var(--shadow-md);
+}
+.b-label{font-size:17px;font-weight:800;}
+.b-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.b-pill{
+  padding:6px 16px;border-radius:20px;
+  font-size:12px;font-weight:700;color:#fff;
+  text-transform:uppercase;letter-spacing:0.8px;
+  white-space:nowrap;margin-left:auto;
+}
+
+{% set lc = data.advisory_level %}
+{% if lc == 1 %}
+.banner{background:var(--l1-bg);border-color:var(--l1-border);}
+.b-circle,.b-pill{background:var(--l1);}
+.b-label{color:var(--l1);}
+{% elif lc == 2 %}
+.banner{background:var(--l2-bg);border-color:var(--l2-border);}
+.b-circle,.b-pill{background:var(--l2);}
+.b-label{color:var(--l2);}
+{% elif lc == 3 %}
+.banner{background:var(--l3-bg);border-color:var(--l3-border);}
+.b-circle,.b-pill{background:var(--l3);}
+.b-label{color:var(--l3);}
+{% else %}
+.banner{background:var(--l4-bg);border-color:var(--l4-border);}
+.b-circle,.b-pill{background:var(--l4);}
+.b-label{color:var(--l4);}
+{% endif %}
+
+/* ── SECTION ── */
+.section{margin-bottom:28px;scroll-margin-top:58px;}
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sec-icon{font-size:20px;}
+.sec-title{font-size:18px;font-weight:800;color:var(--navy);}
+.sec-line{flex:1;height:1px;background:var(--border);}
+
+/* ── CARDS ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow);}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:700px){.grid-3,.grid-2{grid-template-columns:1fr;}}
+
+.card-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;color:var(--navy);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+
+/* ── STAT GRID ── */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 14px;margin-bottom:12px;}
+.s-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);}
+.s-val{font-size:13px;font-weight:700;color:var(--navy);margin-top:1px;}
+
+.visa-box{margin-top:10px;padding:8px 12px;background:var(--surface);border-radius:6px;border-left:3px solid var(--navy);font-size:12px;color:#444;line-height:1.5;}
+.visa-box b{color:var(--navy);}
+
+/* ── LIST ── */
+.card ul{padding-left:18px;}
+.card ul li{font-size:13px;color:#444;margin-bottom:5px;line-height:1.5;}
+
+/* ── RISK CARD ── */
+.risk-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);}
+.rh{display:flex;align-items:center;margin-bottom:8px;}
+.r-ico{font-size:16px;margin-right:8px;}
+.r-title{font-size:14px;font-weight:700;color:var(--navy);flex:1;}
+.rbadge{font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:12px;letter-spacing:0.4px;}
+.rbadge-Low{background:var(--l1-bg);color:var(--l1);border:1px solid var(--l1-border);}
+.rbadge-Moderate{background:var(--l2-bg);color:var(--l2);border:1px solid var(--l2-border);}
+.rbadge-Medium{background:var(--l2-bg);color:var(--l2);border:1px solid var(--l2-border);}
+.rbadge-High{background:var(--l4-bg);color:var(--l4);border:1px solid var(--l4-border);}
+.risk-card p{font-size:13px;color:#555;line-height:1.6;}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:4px;font-size:11px;padding:3px 8px;color:#555;}
+.risk-card ul{padding-left:16px;margin-top:6px;}
+.risk-card ul li{font-size:12px;color:#555;margin-bottom:3px;}
+
+/* ── EVENTS ── */
+.event-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow);}
+.eh{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.e-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;background:var(--surface);color:var(--navy);padding:3px 9px;border-radius:4px;white-space:nowrap;border:1px solid var(--border);}
+.e-title{font-size:14px;font-weight:700;color:var(--navy);flex:1;line-height:1.4;}
+.event-card p{font-size:13px;color:#555;line-height:1.6;}
+
+/* ── HELPLINES ── */
+.helpline-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+@media(max-width:600px){.helpline-grid{grid-template-columns:repeat(3,1fr);}}
+.h-item{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;box-shadow:var(--shadow);}
+.h-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);margin-bottom:4px;}
+.h-number{font-size:18px;font-weight:900;color:var(--navy);}
+
+/* ── RECS ── */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:600px){.rec-grid{grid-template-columns:1fr;}}
+.rec-item{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border-radius:7px;padding:10px 12px;}
+.rec-num{width:22px;height:22px;background:var(--navy);border-radius:50%;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.rec-text{font-size:13px;color:#444;line-height:1.5;}
+
+/* ── APPS ── */
+.app-block{margin-bottom:10px;}
+.app-cat{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px;}
+.app-row{display:flex;gap:6px;flex-wrap:wrap;}
+.app-tag{background:var(--surface);border:1px solid var(--border);border-radius:5px;font-size:12px;padding:4px 10px;color:#444;}
+
+/* ── FOOTER ── */
+.page-footer{background:var(--navy);color:#aabbcc;padding:20px 0;margin-top:40px;}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Across Assist</div>
+    <div class="meta">Travel Risk Intelligence · For Internal Use Only</div>
+  </div>
+</div>
+
+<!-- STICKY NAVIGATION -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#overview">Overview</a>
+    <a class="nav-link" href="#risks">Risk Assessment</a>
+    <a class="nav-link" href="#events">Current Events</a>
+    <a class="nav-link" href="#resources">Resources</a>
+    <a class="nav-link" href="#recommendations">Recommendations</a>
+    <a class="nav-link" href="#helplines">Helplines</a>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-country">{{ data.country }}</div>
+        <div class="hero-city">{% if data.city_highlight %}{{ data.city_highlight }} · {% endif %}Travel Advisory</div>
+      </div>
+      <div class="hero-date">
+        <span style="color:var(--muted);font-size:12px;">Report Generated</span>
+        <span class="date-val">{{ data.generated_date }}</span>
+        <div style="margin-top:6px;font-size:11px;color:var(--muted);">Reports overwrite on each new request</div>
+      </div>
+    </div>
+    <div class="banner">
+      <div class="b-circle">{{ data.advisory_level }}</div>
+      <div>
+        <div class="b-label">Level {{ data.advisory_level }} — {{ data.advisory_label }}</div>
+        <div class="b-sub">US State Department Classification · Source: travel.state.gov</div>
+      </div>
+      <div class="b-pill">{{ data.overall_risk }} Risk</div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="sec-header">
+      <span class="sec-icon">🌍</span>
+      <span class="sec-title">Country Overview</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">📊 At a Glance</div>
+        <div class="stat-grid">
+          <div><div class="s-label">Capital</div><div class="s-val">{{ data.overview.capital }}</div></div>
+          <div><div class="s-label">Population</div><div class="s-val">{{ data.overview.population }}</div></div>
+          <div><div class="s-label">Currency</div><div class="s-val">{{ data.overview.currency }}</div></div>
+          <div><div class="s-label">Language</div><div class="s-val">{{ data.overview.language }}</div></div>
+          <div><div class="s-label">Timezone</div><div class="s-val">{{ data.overview.timezone }}</div></div>
+          <div><div class="s-label">Best Time</div><div class="s-val">{{ data.best_time_to_visit }}</div></div>
+        </div>
+        <p style="font-size:13px;color:#444;line-height:1.6;">{{ data.overview.brief }}</p>
+        {% if data.visa_requirement %}
+        <div class="visa-box"><b>Visa (Indian Passport):</b> {{ data.visa_requirement }}</div>
+        {% endif %}
+      </div>
+      <div class="card">
+        <div class="card-title">📌 Key Features</div>
+        <ul>{% for f in data.key_features %}<li>{{ f }}</li>{% endfor %}</ul>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Key Risks</div>
+        <ul>{% for r in data.key_risks %}<li>{{ r }}</li>{% endfor %}</ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK ASSESSMENT -->
+  <div class="section" id="risks">
+    <div class="sec-header">
+      <span class="sec-icon">🛡️</span>
+      <span class="sec-title">Risk Assessment</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="grid-2">
+      {% set smap = [
+        ('civil_unrest','✊','Civil Unrest'),
+        ('crime','🔒','Crime'),
+        ('terrorism','🎯','Terrorism'),
+        ('womens_safety','👩','Women\'s Safety'),
+        ('health','🏥','Health'),
+        ('air_pollution','💨','Air Pollution'),
+        ('road_safety','🚗','Road Safety'),
+        ('natural_disasters','🌪️','Natural Disasters')
+      ] %}
+      {% for key,ico,label in smap %}
+      {% if data.sections[key] is defined %}
+      {% set s = data.sections[key] %}
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">{{ ico }}</span>
+          <span class="r-title">{{ label }}</span>
+          {% if s.level is defined %}<span class="rbadge rbadge-{{ s.level }}">{{ s.level }}</span>{% endif %}
+        </div>
+        <p>{{ s.summary }}</p>
+        {% if s.hotspots is defined and s.hotspots %}<div class="tag-row">{% for h in s.hotspots %}<span class="tag">{{ h }}</span>{% endfor %}</div>{% endif %}
+        {% if s.high_risk_areas is defined and s.high_risk_areas %}<div class="tag-row">{% for h in s.high_risk_areas %}<span class="tag">{{ h }}</span>{% endfor %}</div>{% endif %}
+        {% if s.common_crimes is defined and s.common_crimes %}<div class="tag-row">{% for c in s.common_crimes %}<span class="tag">{{ c }}</span>{% endfor %}</div>{% endif %}
+        {% if s.vaccinations is defined and s.vaccinations %}<div class="tag-row">{% for v in s.vaccinations %}<span class="tag">{{ v }}</span>{% endfor %}</div>{% endif %}
+        {% if s.aqi_range is defined %}<p style="margin-top:6px;font-size:12px;color:var(--muted);">AQI: {{ s.aqi_range }}{% if s.worst_months is defined %} · Peak: {{ s.worst_months }}{% endif %}</p>{% endif %}
+        {% if s.tips is defined and s.tips %}<ul>{% for t in s.tips %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- CURRENT EVENTS -->
+  {% if data.current_events %}
+  <div class="section" id="events">
+    <div class="sec-header">
+      <span class="sec-icon">📰</span>
+      <span class="sec-title">Current Events</span>
+      <div class="sec-line"></div>
+    </div>
+    {% for ev in data.current_events %}
+    <div class="event-card">
+      <div class="eh">
+        <span class="e-cat">{{ ev.category }}</span>
+        <span class="e-title">{{ ev.title }}</span>
+        <span class="rbadge rbadge-{{ ev.risk_level }}">{{ ev.risk_level }}</span>
+      </div>
+      <p>{{ ev.description }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- RESOURCES -->
+  <div class="section" id="resources">
+    <div class="sec-header">
+      <span class="sec-icon">🗂️</span>
+      <span class="sec-title">Resources</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">🏢 Business Hubs</div>
+        <ul>{% for h in data.business_hubs %}<li>{{ h }}</li>{% endfor %}</ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🏥 Key Hospitals</div>
+        <ul>{% for h in data.hospitals %}<li>{{ h.name }}{% if h.city %} <span style="color:var(--muted);font-size:11px;">({{ h.city }})</span>{% endif %}</li>{% endfor %}</ul>
+      </div>
+      <div class="card">
+        <div class="card-title">📱 Useful Apps</div>
+        {% for cat in data.useful_apps %}
+        <div class="app-block">
+          <div class="app-cat">{{ cat.category }}</div>
+          <div class="app-row">{% for a in cat.apps %}<span class="app-tag">{{ a }}</span>{% endfor %}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="section" id="recommendations">
+    <div class="sec-header">
+      <span class="sec-icon">✅</span>
+      <span class="sec-title">Recommendations</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="rec-grid">
+      {% for rec in data.recommendations %}
+      <div class="rec-item">
+        <div class="rec-num">{{ loop.index }}</div>
+        <div class="rec-text">{{ rec }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- HELPLINES -->
+  <div class="section" id="helplines">
+    <div class="sec-header">
+      <span class="sec-icon">📞</span>
+      <span class="sec-title">Emergency Helplines</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="helpline-grid">
+      {% set n = data.emergency_numbers %}
+      {% if n.emergency %}<div class="h-item"><div class="h-label">Emergency</div><div class="h-number">{{ n.emergency }}</div></div>{% endif %}
+      {% if n.police %}<div class="h-item"><div class="h-label">Police</div><div class="h-number">{{ n.police }}</div></div>{% endif %}
+      {% if n.ambulance %}<div class="h-item"><div class="h-label">Ambulance</div><div class="h-number">{{ n.ambulance }}</div></div>{% endif %}
+      {% if n.fire %}<div class="h-item"><div class="h-label">Fire</div><div class="h-number">{{ n.fire }}</div></div>{% endif %}
+      {% if n.tourist_helpline and n.tourist_helpline != 'N/A' %}<div class="h-item"><div class="h-label">Tourist</div><div class="h-number">{{ n.tourist_helpline }}</div></div>{% endif %}
+    </div>
+  </div>
+
+</div>
+
+<!-- PAGE FOOTER -->
+<div class="page-footer">
+  <div class="footer-inner">
+    <span>Source: US State Department · travel.state.gov</span>
+    <span>Generated: {{ data.generated_date }} · For internal use only — Across Assist Private Limited</span>
+  </div>
+</div>
+
+<script>
+// Active nav highlight on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
+    }
+  });
+}, {rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 """
 generate_ondemand_report.py
 Generates a detailed single-country travel risk report on demand.
-Uses Claude Sonnet with web search for rich, current content.
+Outputs: PDF (emailed) + HTML webpage (committed to docs/ for GitHub Pages)
 """
 
 import anthropic
@@ -10,6 +10,7 @@ import os
 import sys
 from datetime import datetime
 from generate_ondemand_pdf import generate_country_pdf
+from generate_ondemand_webpage import generate_country_webpage
 from send_ondemand_email import send_ondemand_report
 
 SYSTEM_PROMPT = """You are a senior corporate travel risk analyst producing detailed country briefings for multinational companies.
@@ -82,7 +83,7 @@ The JSON must follow this exact structure:
       "level": "<Low|Moderate|High>",
       "summary": "<2 sentences on health risks>",
       "vaccinations": ["<recommended vaccine>", "<recommended vaccine>"],
-      "water_safe": <true|false>
+      "water_safe": true
     },
     "road_safety": {
       "level": "<Low|Moderate|High>",
@@ -155,7 +156,7 @@ def classify_country(country_name: str) -> dict:
     client = anthropic.Anthropic(api_key=api_key)
 
     print(f"  Generating report for: {country_name}")
-    print(f"  Using model: claude-sonnet-4-20250514 with web search...")
+    print(f"  Using model: claude-sonnet-4-6 with web search...")
 
     response = client.messages.create(
         model="claude-sonnet-4-6",
@@ -217,22 +218,26 @@ def main():
     print(f"{'='*50}\n")
 
     # Step 1: Generate content via Claude
-    print("[1/3] Fetching live data and generating report content...")
+    print("[1/4] Fetching live data and generating report content...")
     report_data = classify_country(country)
 
     # Save JSON for debugging
     with open("ondemand_report_data.json", "w") as f:
         json.dump(report_data, f, indent=2)
-    print("  Report data saved to ondemand_report_data.json")
+    print("  Report data saved.")
 
     # Step 2: Generate PDF
-    print("\n[2/3] Generating PDF...")
+    print("\n[2/4] Generating PDF...")
     pdf_path = generate_country_pdf(report_data)
-    print(f"  PDF saved: {pdf_path}")
 
-    # Step 3: Send email
-    print("\n[3/3] Sending email...")
-    send_ondemand_report(pdf_path, report_data)
+    # Step 3: Generate webpage
+    print("\n[3/4] Generating webpage...")
+    webpage_path = generate_country_webpage(report_data)
+    print(f"  Webpage saved: {webpage_path}")
+
+    # Step 4: Send email
+    print("\n[4/4] Sending email...")
+    send_ondemand_report(pdf_path, report_data, webpage_path)
 
     print(f"\n{'='*50}")
     print(f"  REPORT COMPLETE: {country}")
