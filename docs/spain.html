@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Travel Advisory — Spain | Across Assist</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#0f1f3d;
+  --l1:#1a7a3f; --l1-bg:#e8f5ee; --l1-border:#a8d5b8;
+  --l2:#c47900; --l2-bg:#fef9ec; --l2-border:#f0cc7a;
+  --l3:#c44a00; --l3-bg:#fef0ea; --l3-border:#f0a07a;
+  --l4:#a01010; --l4-bg:#fdeaea; --l4-border:#e08888;
+  --muted:#6b7a99;
+  --border:#dde3ef;
+  --surface:#f4f6fb;
+  --shadow:0 1px 5px rgba(15,31,61,0.08);
+  --shadow-md:0 4px 14px rgba(15,31,61,0.1);
+}
+body{font-family:'Inter',Arial,sans-serif;background:var(--surface);color:var(--navy);font-size:14px;line-height:1.6;}
+
+/* ── TOP BAR ── */
+.topbar{background:var(--navy);color:#fff;padding:10px 0;}
+.topbar-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;}
+.topbar .brand{font-size:16px;font-weight:800;letter-spacing:-0.5px;}
+.topbar .meta{font-size:12px;color:#aabbcc;}
+
+/* ── STICKY NAV ── */
+.sticky-nav{
+  position:sticky;top:0;z-index:100;
+  background:#fff;border-bottom:2px solid var(--border);
+  box-shadow:var(--shadow-md);
+}
+.nav-inner{
+  max-width:960px;margin:0 auto;padding:0 24px;
+  display:flex;gap:0;overflow-x:auto;
+}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-link{
+  padding:13px 16px;
+  font-size:12px;font-weight:600;color:var(--muted);
+  text-decoration:none;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;transition:all 0.2s;
+}
+.nav-link:hover{color:var(--navy);border-bottom-color:var(--navy);}
+.nav-link.active{color:var(--navy);border-bottom-color:var(--navy);}
+
+/* ── MAIN ── */
+.main{max-width:960px;margin:0 auto;padding:28px 24px 48px;}
+
+/* ── HERO ── */
+.hero{
+  background:#fff;border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow-md);
+  padding:28px 32px;margin-bottom:24px;
+}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
+.hero-country{font-size:36px;font-weight:900;letter-spacing:-1.5px;line-height:1;}
+.hero-city{font-size:14px;color:var(--muted);margin-top:5px;font-weight:500;}
+.hero-date{text-align:right;font-size:12px;color:var(--muted);}
+.hero-date .date-val{font-size:15px;font-weight:700;color:var(--navy);display:block;}
+
+.banner{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 20px;border-radius:8px;border:1.5px solid;
+}
+.b-circle{
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;color:#fff;flex-shrink:0;
+  box-shadow:var(--shadow-md);
+}
+.b-label{font-size:17px;font-weight:800;}
+.b-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.b-pill{
+  padding:6px 16px;border-radius:20px;
+  font-size:12px;font-weight:700;color:#fff;
+  text-transform:uppercase;letter-spacing:0.8px;
+  white-space:nowrap;margin-left:auto;
+}
+
+
+
+.banner{background:var(--l2-bg);border-color:var(--l2-border);}
+.b-circle,.b-pill{background:var(--l2);}
+.b-label{color:var(--l2);}
+
+
+/* ── SECTION ── */
+.section{margin-bottom:28px;scroll-margin-top:58px;}
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sec-icon{font-size:20px;}
+.sec-title{font-size:18px;font-weight:800;color:var(--navy);}
+.sec-line{flex:1;height:1px;background:var(--border);}
+
+/* ── CARDS ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px 20px;box-shadow:var(--shadow);}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:700px){.grid-3,.grid-2{grid-template-columns:1fr;}}
+
+.card-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.8px;color:var(--navy);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+
+/* ── STAT GRID ── */
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 14px;margin-bottom:12px;}
+.s-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);}
+.s-val{font-size:13px;font-weight:700;color:var(--navy);margin-top:1px;}
+
+.visa-box{margin-top:10px;padding:8px 12px;background:var(--surface);border-radius:6px;border-left:3px solid var(--navy);font-size:12px;color:#444;line-height:1.5;}
+.visa-box b{color:var(--navy);}
+
+/* ── LIST ── */
+.card ul{padding-left:18px;}
+.card ul li{font-size:13px;color:#444;margin-bottom:5px;line-height:1.5;}
+
+/* ── RISK CARD ── */
+.risk-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);}
+.rh{display:flex;align-items:center;margin-bottom:8px;}
+.r-ico{font-size:16px;margin-right:8px;}
+.r-title{font-size:14px;font-weight:700;color:var(--navy);flex:1;}
+.rbadge{font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:12px;letter-spacing:0.4px;}
+.rbadge-Low{background:var(--l1-bg);color:var(--l1);border:1px solid var(--l1-border);}
+.rbadge-Moderate{background:var(--l2-bg);color:var(--l2);border:1px solid var(--l2-border);}
+.rbadge-Medium{background:var(--l2-bg);color:var(--l2);border:1px solid var(--l2-border);}
+.rbadge-High{background:var(--l4-bg);color:var(--l4);border:1px solid var(--l4-border);}
+.risk-card p{font-size:13px;color:#555;line-height:1.6;}
+.tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.tag{background:var(--surface);border:1px solid var(--border);border-radius:4px;font-size:11px;padding:3px 8px;color:#555;}
+.risk-card ul{padding-left:16px;margin-top:6px;}
+.risk-card ul li{font-size:12px;color:#555;margin-bottom:3px;}
+
+/* ── EVENTS ── */
+.event-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow);}
+.eh{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.e-cat{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;background:var(--surface);color:var(--navy);padding:3px 9px;border-radius:4px;white-space:nowrap;border:1px solid var(--border);}
+.e-title{font-size:14px;font-weight:700;color:var(--navy);flex:1;line-height:1.4;}
+.event-card p{font-size:13px;color:#555;line-height:1.6;}
+
+/* ── HELPLINES ── */
+.helpline-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+@media(max-width:600px){.helpline-grid{grid-template-columns:repeat(3,1fr);}}
+.h-item{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;box-shadow:var(--shadow);}
+.h-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px;color:var(--muted);margin-bottom:4px;}
+.h-number{font-size:18px;font-weight:900;color:var(--navy);}
+
+/* ── RECS ── */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:600px){.rec-grid{grid-template-columns:1fr;}}
+.rec-item{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border-radius:7px;padding:10px 12px;}
+.rec-num{width:22px;height:22px;background:var(--navy);border-radius:50%;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.rec-text{font-size:13px;color:#444;line-height:1.5;}
+
+/* ── APPS ── */
+.app-block{margin-bottom:10px;}
+.app-cat{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:5px;}
+.app-row{display:flex;gap:6px;flex-wrap:wrap;}
+.app-tag{background:var(--surface);border:1px solid var(--border);border-radius:5px;font-size:12px;padding:4px 10px;color:#444;}
+
+/* ── FOOTER ── */
+.page-footer{background:var(--navy);color:#aabbcc;padding:20px 0;margin-top:40px;}
+.footer-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">Across Assist</div>
+    <div class="meta">Travel Risk Intelligence · For Internal Use Only</div>
+  </div>
+</div>
+
+<!-- STICKY NAVIGATION -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <a class="nav-link" href="#overview">Overview</a>
+    <a class="nav-link" href="#risks">Risk Assessment</a>
+    <a class="nav-link" href="#events">Current Events</a>
+    <a class="nav-link" href="#resources">Resources</a>
+    <a class="nav-link" href="#recommendations">Recommendations</a>
+    <a class="nav-link" href="#helplines">Helplines</a>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-country">Spain</div>
+        <div class="hero-city">Madrid · Travel Advisory</div>
+      </div>
+      <div class="hero-date">
+        <span style="color:var(--muted);font-size:12px;">Report Generated</span>
+        <span class="date-val">10 June 2026</span>
+        <div style="margin-top:6px;font-size:11px;color:var(--muted);">Reports overwrite on each new request</div>
+      </div>
+    </div>
+    <div class="banner">
+      <div class="b-circle">2</div>
+      <div>
+        <div class="b-label">Level 2 — Exercise Increased Caution</div>
+        <div class="b-sub">US State Department Classification · Source: travel.state.gov</div>
+      </div>
+      <div class="b-pill">Moderate Risk</div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="sec-header">
+      <span class="sec-icon">🌍</span>
+      <span class="sec-title">Country Overview</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">📊 At a Glance</div>
+        <div class="stat-grid">
+          <div><div class="s-label">Capital</div><div class="s-val">Madrid</div></div>
+          <div><div class="s-label">Population</div><div class="s-val">47.4 million</div></div>
+          <div><div class="s-label">Currency</div><div class="s-val">Euro (EUR)</div></div>
+          <div><div class="s-label">Language</div><div class="s-val">Spanish (Castilian)</div></div>
+          <div><div class="s-label">Timezone</div><div class="s-val">CET (UTC+1) / CEST (UTC+2) in summer</div></div>
+          <div><div class="s-label">Best Time</div><div class="s-val">March to May (spring) and September to November (autumn) — mild temperatures, fewer crowds, lower hotel rates, and reduced wildfire/heatwave risk; ideal for business travel and conferences.</div></div>
+        </div>
+        <p style="font-size:13px;color:#444;line-height:1.6;">Spain is one of Europe&#39;s leading economies and a premier global business destination, offering well-developed infrastructure, strong tourism and financial sectors, and easy access to both European and Latin American markets. The country recorded over 83 million international visitors in 2025, reflecting its robust hospitality and transport networks suited to corporate travellers.</p>
+        
+        <div class="visa-box"><b>Visa (Indian Passport):</b> Indian passport holders require a Schengen Short-Stay Visa (Type C) to enter Spain — visa-on-arrival and visa-free entry are not available for Indian citizens. The visa permits stays of up to 90 days within any 180-day period and grants access to all 29 Schengen countries. Applications must be submitted in person through BLS International centres in India (Delhi, Mumbai, Bengaluru, Chennai, Hyderabad, Kolkata); the visa fee is approximately €90 for adults. Processing typically takes 15 calendar days. Mandatory travel insurance with minimum €30,000 coverage is required. Passport must be valid for at least 3 months beyond the planned departure date from the Schengen Area.</div>
+        
+      </div>
+      <div class="card">
+        <div class="card-title">📌 Key Features</div>
+        <ul><li>Spain is a Schengen Area member — a Spain Schengen visa permits free movement across all 29 Schengen states, making it an ideal European hub for multi-country business trips.</li><li>Tourism contributes approximately 12% of Spain&#39;s GDP, making hospitality and business infrastructure highly developed across major cities.</li><li>Spain&#39;s Civil Aviation Authority meets international aviation safety standards as assessed by the US Federal Aviation Administration (FAA).</li><li>Major cities including Madrid and Barcelona have implemented Low Emission Zones (ZBE); rental vehicles must comply or risk fines when entering city centres.</li></ul>
+      </div>
+      <div class="card">
+        <div class="card-title">⚠️ Key Risks</div>
+        <ul><li>Terrorism: Terrorist groups continue plotting possible attacks with little or no warning, targeting tourist locations, transport hubs, hotels, and public events.</li><li>Petty Crime: Pickpocketing, bag snatching, and car break-ins are very common — particularly in Barcelona and Madrid — and represent the most frequent risk to business travellers.</li><li>Civil Unrest: Anti-tourism and housing-cost protests occur regularly in major cities and tourist regions; some demonstrations have turned confrontational.</li><li>Extreme Weather: Summer heatwaves can exceed 40°C (104°F) in southern regions; severe storms, wildfires, and flash flooding are seasonal hazards.</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK ASSESSMENT -->
+  <div class="section" id="risks">
+    <div class="sec-header">
+      <span class="sec-icon">🛡️</span>
+      <span class="sec-title">Risk Assessment</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="grid-2">
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">✊</span>
+          <span class="r-title">Civil Unrest</span>
+          <span class="rbadge rbadge-Moderate">Moderate</span>
+        </div>
+        <p>Demonstrations are common in Spain and may arise in response to political, economic, or social issues, including ongoing anti-tourism and housing-cost protests. In June 2025, the US Embassy issued a demonstration alert warning of anti-tourism protests across Barcelona, San Sebastián, Valencia, and Mallorca. Hundreds of thousands also marched across over 40 Spanish cities in April 2025 over housing costs, with some protests turning confrontational near tourist hotspots.</p>
+        <div class="tag-row"><span class="tag">Barcelona (Las Ramblas, city centre)</span><span class="tag">Palma de Mallorca</span><span class="tag">San Sebastián</span><span class="tag">Valencia</span><span class="tag">Canary Islands</span></div>
+        
+        
+        
+        
+        
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">🔒</span>
+          <span class="r-title">Crime</span>
+          <span class="rbadge rbadge-Moderate">Moderate</span>
+        </div>
+        <p>Violent crime in Spain is rare and the country ranks 25th on the 2025 Global Peace Index. However, petty crime is a significant concern: pickpocketing, bag snatching, and distraction-based theft are very common in tourist areas, on public transport, and at markets. Car break-ins are also frequent, particularly on motorways and in city parking areas.</p>
+        
+        <div class="tag-row"><span class="tag">Barcelona (Las Ramblas, Park Güell, Gothic Quarter, public transport)</span><span class="tag">Madrid (Atocha Station, Puerta del Sol, Golden Triangle museum district)</span><span class="tag">Costa del Sol resorts during peak summer season</span></div>
+        <div class="tag-row"><span class="tag">Pickpocketing and bag snatching</span><span class="tag">Car break-ins and highway theft</span><span class="tag">Financial and romance scams</span><span class="tag">Drink tampering in nightlife venues</span></div>
+        
+        
+        
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">🎯</span>
+          <span class="r-title">Terrorism</span>
+          <span class="rbadge rbadge-Moderate">Moderate</span>
+        </div>
+        <p>Spain&#39;s national terrorism alert level is rated &#39;High&#39; by Spanish authorities. Terrorist groups continue to plot possible attacks with little or no warning; targets include tourist locations, transportation centres, markets, hotels, restaurants, places of worship, and major public events. Spanish authorities have taken strong preventive measures, including arrests of suspected plotters, but credible intelligence confirms ongoing planning by extremist groups across Europe.</p>
+        
+        <div class="tag-row"><span class="tag">Barcelona (Las Ramblas, transport hubs)</span><span class="tag">Madrid (Atocha Station, major public squares)</span><span class="tag">Large sporting and cultural event venues nationwide</span></div>
+        
+        
+        
+        
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">👩</span>
+          <span class="r-title">Women&#39;s Safety</span>
+          <span class="rbadge rbadge-Low">Low</span>
+        </div>
+        <p>Spain ranks as one of the safest countries in Europe for solo women travellers, with low rates of violent crime. However, travellers should exercise heightened caution after dark, particularly in nightlife areas, due to risks of drink spiking and opportunistic theft. The national helpline 016 operates 24/7 in 53 languages for victims of gender-based violence.</p>
+        
+        
+        
+        
+        
+        <ul><li>Avoid accepting drinks from strangers and never leave your drink unattended in bars or clubs.</li><li>Stay in well-lit, populated areas at night and use licensed taxis or reputable ride-hailing apps when travelling alone.</li></ul>
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">🏥</span>
+          <span class="r-title">Health</span>
+          <span class="rbadge rbadge-Low">Low</span>
+        </div>
+        <p>Health risks in Spain are comparable to other Western European countries, and no vaccinations are required for entry. The public and private healthcare systems are well-developed, and medical help is generally accessible nationwide, though response times in smaller cities may be longer.</p>
+        
+        
+        
+        <div class="tag-row"><span class="tag">Routine vaccinations (MMR, diphtheria, tetanus, polio) recommended to be up to date</span><span class="tag">Hepatitis A (recommended for travellers visiting rural or less-developed areas)</span><span class="tag">COVID-19 (as per current WHO/home country guidance)</span></div>
+        
+        
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">💨</span>
+          <span class="r-title">Air Pollution</span>
+          <span class="rbadge rbadge-Low">Low</span>
+        </div>
+        <p>Spain&#39;s overall air quality is generally good, with most cities recording AQI levels in the &#39;Good&#39; or &#39;Moderate&#39; range. Urban centres such as Barcelona and Madrid experience elevated NO2 and particulate matter levels from vehicle traffic, with pollution peaking in summer due to heat-intensified ozone formation and in winter due to temperature inversions trapping pollutants in valley cities like Granada.</p>
+        
+        
+        
+        
+        <p style="margin-top:6px;font-size:12px;color:var(--muted);">AQI: 20–60 (Good to Moderate) in major cities; occasionally higher in summer · Peak: June to August (ozone/heat) and December to February (particulate matter in inland cities)</p>
+        
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">🚗</span>
+          <span class="r-title">Road Safety</span>
+          <span class="rbadge rbadge-Moderate">Moderate</span>
+        </div>
+        <p>Road conditions in Spain are generally good, but driving habits differ significantly from those in many countries — traffic is faster, motorbikes frequently weave through lanes, and urban intersections use independent traffic lights on each side. Rural mountain roads in the Pyrenees and on islands require extra caution, and night driving in rural areas carries risks due to poorly marked roads and free-roaming livestock.</p>
+        
+        
+        
+        
+        
+        
+      </div>
+      
+      
+      
+      
+      <div class="risk-card">
+        <div class="rh">
+          <span class="r-ico">🌪️</span>
+          <span class="r-title">Natural Disasters</span>
+          <span class="rbadge rbadge-Moderate">Moderate</span>
+        </div>
+        <p>Spain experiences a range of natural hazards including intense summer heatwaves (temperatures exceeding 40°C in Andalusia), severe thunderstorms with flash flooding common in coastal Catalonia and Valencia, wildfires during June–August, and periodic earthquakes in southern Spain and the Pyrenees. Volcanic activity is a risk in the Canary Islands.</p>
+        
+        
+        
+        
+        
+        
+      </div>
+      
+      
+    </div>
+  </div>
+
+  <!-- CURRENT EVENTS -->
+  
+  <div class="section" id="events">
+    <div class="sec-header">
+      <span class="sec-icon">📰</span>
+      <span class="sec-title">Current Events</span>
+      <div class="sec-line"></div>
+    </div>
+    
+    <div class="event-card">
+      <div class="eh">
+        <span class="e-cat">Civil Disturbance</span>
+        <span class="e-title">Anti-Tourism Demonstrations Across Major Spanish Cities</span>
+        <span class="rbadge rbadge-Medium">Medium</span>
+      </div>
+      <p>Coordinated anti-tourism protests took place on 15 June 2025 across Barcelona, San Sebastián, Valencia, Mallorca, and other cities, with some protesters using water pistols and smoke devices near tourist hotspots. The US Embassy Madrid issued a formal Demonstration Alert on 13 June 2025 advising travellers to avoid large gatherings. Protests are expected to continue through peak summer season; business travellers should monitor local media and avoid tourist-dense areas during announced demonstrations.</p>
+    </div>
+    
+    <div class="event-card">
+      <div class="eh">
+        <span class="e-cat">Security</span>
+        <span class="e-title">US Embassy Worldwide Caution Security Alert – June 22, 2025</span>
+        <span class="rbadge rbadge-Medium">Medium</span>
+      </div>
+      <p>The US Embassy in Spain issued a Worldwide Caution alert on 22 June 2025 citing the Israel-Iran conflict and the potential for demonstrations against US citizens and interests abroad. Travellers are advised to maintain a low profile, avoid US government facilities during protests, and stay alert to their surroundings, particularly near embassies, consulates, and American-branded establishments.</p>
+    </div>
+    
+    <div class="event-card">
+      <div class="eh">
+        <span class="e-cat">Security</span>
+        <span class="e-title">Ongoing Elevated Terrorism Threat Level</span>
+        <span class="rbadge rbadge-High">High</span>
+      </div>
+      <p>Spain&#39;s national terrorism alert level remains at &#39;High&#39;, with credible intelligence confirming that extremist groups continue to plan attacks across Europe, including Spain. Targets include tourist sites, transport hubs (airports and train stations), hotels, restaurants, and major public events. The Guardia Civil and Policía Nacional have increased patrols at high-footfall locations including Barcelona&#39;s Las Ramblas, Madrid&#39;s Puerta del Sol, and Seville&#39;s historic centre.</p>
+    </div>
+    
+    <div class="event-card">
+      <div class="eh">
+        <span class="e-cat">Natural Disaster</span>
+        <span class="e-title">Summer Wildfire and Extreme Heat Season Commences</span>
+        <span class="rbadge rbadge-Medium">Medium</span>
+      </div>
+      <p>Spain entered its high-risk wildfire season in June 2025, with over 16,000 hectares already burned by end of April 2025. Temperatures in southern Spain, particularly Andalusia, are expected to exceed 40°C during peak summer months, posing health risks for outdoor activities and business events. Travellers should stay hydrated, avoid strenuous outdoor exertion during peak afternoon heat, and monitor local alerts for wildfire evacuations in coastal and rural areas.</p>
+    </div>
+    
+  </div>
+  
+
+  <!-- RESOURCES -->
+  <div class="section" id="resources">
+    <div class="sec-header">
+      <span class="sec-icon">🗂️</span>
+      <span class="sec-title">Resources</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">🏢 Business Hubs</div>
+        <ul><li>Madrid (IFEMA convention centre, financial district AZCA, Paseo de la Castellana)</li><li>Barcelona (22@ tech district, Fira Barcelona convention centre, Port Vell)</li><li>Bilbao (Basque industrial and services hub)</li><li>Valencia (logistics, automotive, and manufacturing sector hub)</li></ul>
+      </div>
+      <div class="card">
+        <div class="card-title">🏥 Key Hospitals</div>
+        <ul><li>Hospital Universitario La Paz <span style="color:var(--muted);font-size:11px;">(Madrid)</span></li><li>Hospital Clínic de Barcelona <span style="color:var(--muted);font-size:11px;">(Barcelona)</span></li><li>Hospital Universitario Virgen del Rocío <span style="color:var(--muted);font-size:11px;">(Seville)</span></li><li>Clínica Universidad de Navarra <span style="color:var(--muted);font-size:11px;">(Madrid)</span></li></ul>
+      </div>
+      <div class="card">
+        <div class="card-title">📱 Useful Apps</div>
+        
+        <div class="app-block">
+          <div class="app-cat">Transport</div>
+          <div class="app-row"><span class="app-tag">Renfe (national rail)</span><span class="app-tag">EMT Madrid (city bus)</span><span class="app-tag">TMB Barcelona (metro/bus)</span><span class="app-tag">Cabify</span></div>
+        </div>
+        
+        <div class="app-block">
+          <div class="app-cat">Food</div>
+          <div class="app-row"><span class="app-tag">Glovo</span><span class="app-tag">Just Eat España</span><span class="app-tag">TheFork (ElTenedor)</span></div>
+        </div>
+        
+        <div class="app-block">
+          <div class="app-cat">Maps</div>
+          <div class="app-row"><span class="app-tag">Google Maps</span><span class="app-tag">Citymapper (Madrid/Barcelona)</span></div>
+        </div>
+        
+        <div class="app-block">
+          <div class="app-cat">Payment</div>
+          <div class="app-row"><span class="app-tag">Bizum (local P2P payments)</span><span class="app-tag">Revolut</span><span class="app-tag">Apple Pay / Google Pay</span></div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="section" id="recommendations">
+    <div class="sec-header">
+      <span class="sec-icon">✅</span>
+      <span class="sec-title">Recommendations</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="rec-grid">
+      
+      <div class="rec-item">
+        <div class="rec-num">1</div>
+        <div class="rec-text">Carry only a photocopy of your passport when sightseeing, and store the original securely in your hotel safe — Spanish law requires ID to be carried but a certified copy is accepted in most situations.</div>
+      </div>
+      
+      <div class="rec-item">
+        <div class="rec-num">2</div>
+        <div class="rec-text">Use anti-theft bags or money belts in crowded tourist areas, on public transport, and at markets; never place valuables in back pockets or leave bags unattended on chair backs in restaurants.</div>
+      </div>
+      
+      <div class="rec-item">
+        <div class="rec-num">3</div>
+        <div class="rec-text">Avoid demonstrations and large gatherings; monitor the US Embassy Spain alerts page and local Spanish media for protest announcements, particularly in Barcelona, Mallorca, and Madrid.</div>
+      </div>
+      
+      <div class="rec-item">
+        <div class="rec-num">4</div>
+        <div class="rec-text">Obtain an International Driving Permit (IDP) before arrival if you plan to drive; confirm rental vehicles carry a Low Emission Zone (ZBE) compliance sticker to avoid fines in Madrid and Barcelona city centres.</div>
+      </div>
+      
+      <div class="rec-item">
+        <div class="rec-num">5</div>
+        <div class="rec-text">Ensure corporate travel insurance provides a minimum of €30,000 medical coverage (Schengen requirement); carry your insurer&#39;s 24-hour emergency number and save 112 as your single emergency contact in Spain.</div>
+      </div>
+      
+      <div class="rec-item">
+        <div class="rec-num">6</div>
+        <div class="rec-text">Book Schengen visa appointments well in advance (at least 6–8 weeks before travel) through BLS International in India; prepare financial proof, confirmed accommodation, return tickets, and travel insurance documentation.</div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- HELPLINES -->
+  <div class="section" id="helplines">
+    <div class="sec-header">
+      <span class="sec-icon">📞</span>
+      <span class="sec-title">Emergency Helplines</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="helpline-grid">
+      
+      <div class="h-item"><div class="h-label">Emergency</div><div class="h-number">112</div></div>
+      <div class="h-item"><div class="h-label">Police</div><div class="h-number">091 (Policía Nacional) / 062 (Guardia Civil)</div></div>
+      <div class="h-item"><div class="h-label">Ambulance</div><div class="h-number">061</div></div>
+      <div class="h-item"><div class="h-label">Fire</div><div class="h-number">080</div></div>
+      <div class="h-item"><div class="h-label">Tourist</div><div class="h-number">010 (Madrid City Info) / 012 (Regional services)</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PAGE FOOTER -->
+<div class="page-footer">
+  <div class="footer-inner">
+    <span>Source: US State Department · travel.state.gov</span>
+    <span>Generated: 10 June 2026 · For internal use only — Across Assist Private Limited</span>
+  </div>
+</div>
+
+<script>
+// Active nav highlight on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(active) active.classList.add('active');
+    }
+  });
+}, {rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
