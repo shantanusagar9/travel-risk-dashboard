@@ -141,7 +141,7 @@ The JSON must follow this exact structure:
     }
   ],
 
-  "best_time_to_visit": "<months or seasons recommended for travel>",
+  "best_time_to_visit": "<max 2 sentences, months only e.g. March–May and Sept–Nov>",
   "visa_requirement": "<brief visa info for Indian passport holders>"
 }
 
