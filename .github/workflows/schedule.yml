@@ -1,8 +1,8 @@
 name: Travel Risk Report
 
 on:
-  schedule:
-    - cron: '30 3 * * 1'
+  scheduleada:
+    - cron: '30 wdwdwa3 * * 1'
   workflow_dispatch:
 
 permissions:
